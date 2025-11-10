@@ -3,104 +3,595 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI交流平台 - 侧边栏导航</title>
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- 引入外部CSS样式文件 -->
-    <link rel="stylesheet" href="chaoxing_left_table.css">
+    <title>赛事官网汇总</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <style>
+        /* 全局样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* 顶部导航栏 */
+        header {
+            background: linear-gradient(135deg, #1e5799 0%, #207cca 51%, #2989d8 100%);
+            color: white;
+            padding: 1.5rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .header-content h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .header-content p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 800px;
+        }
+
+        /* 背景装饰 */
+        .header-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            opacity: 0.1;
+        }
+
+        .header-bg i {
+            position: absolute;
+            font-size: 10rem;
+            color: white;
+        }
+
+        .bg-icon-1 {
+            top: -20px;
+            right: 5%;
+            transform: rotate(15deg);
+        }
+
+        .bg-icon-2 {
+            bottom: -30px;
+            left: 8%;
+            transform: rotate(-10deg);
+        }
+
+        /* 主内容区 */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        /* 统计卡片 */
+        .stats-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-card i {
+            font-size: 2.5rem;
+            color: #2989d8;
+            margin-bottom: 1rem;
+        }
+
+        .stat-card h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1e5799;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card p {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        /* 分类卡片 */
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .category-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .category-header {
+            background: linear-gradient(135deg, #1e5799 0%, #2989d8 100%);
+            color: white;
+            padding: 1.2rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .category-header h2 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+
+        .category-header h2 i {
+            margin-right: 0.8rem;
+            font-size: 1.5rem;
+        }
+
+        .category-count {
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .events-list {
+            padding: 1.5rem;
+        }
+
+        .event-item {
+            display: flex;
+            align-items: center;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #f0f0f0;
+            transition: background-color 0.2s ease;
+        }
+
+        .event-item:last-child {
+            border-bottom: none;
+        }
+
+        .event-item:hover {
+            background-color: #f9f9f9;
+        }
+
+        .event-item i {
+            color: #2989d8;
+            margin-right: 1rem;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .event-info {
+            flex-grow: 1;
+        }
+
+        .event-info h3 {
+            font-size: 1.05rem;
+            font-weight: 500;
+            margin-bottom: 0.2rem;
+        }
+
+        .event-info p {
+            font-size: 0.9rem;
+            color: #666;
+            word-break: break-all;
+        }
+
+        .event-link {
+            color: #2989d8;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .event-link:hover {
+            color: #1e5799;
+            text-decoration: underline;
+        }
+
+        /* 分类图标映射 */
+        .category-icon {
+            display: inline-block;
+            width: 24px;
+            text-align: center;
+        }
+
+        .football .category-icon:before { content: "\f1e3"; }
+        .basketball .category-icon:before { content: "\f434"; }
+        .swimming .category-icon:before { content: "\f5c4"; }
+        .tennis .category-icon:before { content: "\f45d"; }
+        .athletics .category-icon:before { content: "\f70c"; }
+        .tabletennis .category-icon:before { content: "\f45d"; }
+        .badminton .category-icon:before { content: "\f45d"; }
+        .racing .category-icon:before { content: "\f1b9"; }
+        .platform .category-icon:before { content: "\f144"; }
+        .tickets .category-icon:before { content: "\f145"; }
+        .general .category-icon:before { content: "\f1e0"; }
+
+        /* 页脚 */
+        footer {
+            background-color: #1e5799;
+            color: white;
+            padding: 2rem 0;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            text-align: center;
+        }
+
+        .footer-content p {
+            opacity: 0.8;
+            font-size: 0.95rem;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .header-content h1 {
+                font-size: 1.8rem;
+            }
+            
+            .header-content p {
+                font-size: 1rem;
+            }
+            
+            .stats-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .categories {
+                grid-template-columns: 1fr;
+            }
+            
+            .bg-icon-1, .bg-icon-2 {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-content {
+                padding: 0 1rem;
+            }
+            
+            .container {
+                padding: 0 1rem;
+            }
+            
+            .category-header h2 {
+                font-size: 1.1rem;
+            }
+            
+            .event-info h3 {
+                font-size: 1rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- 侧边栏 -->
-    <nav class="sidebar">
-        <ul class="menu-list">
-            <!-- 应用 -->
-            <li class="menu-item">
-                <a href="#" class="menu-link" data-menu="app">
-                    <i class="fas fa-th menu-icon"></i>
-                    <span class="menu-text">应用</span>
-                    <i class="fas fa-chevron-right menu-arrow"></i>
-                </a>
-                <ul class="submenu">
-                    <li class="submenu-item">
-                        <a href="#" class="submenu-link">智能问答</a>
-                    </li>
-                    <li class="submenu-item">
-                        <a href="#" class="submenu-link">代码生成</a>
-                    </li>
-                    <li class="submenu-item">
-                        <a href="#" class="submenu-link">文档助手</a>
-                    </li>
-                </ul>
-            </li>
+    <!-- 顶部导航栏 -->
+    <header>
+        <div class="header-bg">
+            <i class="fas fa-trophy bg-icon-1"></i>
+            <i class="fas fa-medal bg-icon-2"></i>
+        </div>
+        <div class="header-content">
+            <h1><i class="fas fa-globe-asia"></i> 赛事官网汇总</h1>
+            <p>汇集全球各类体育赛事官方网站，提供便捷的访问入口</p>
+        </div>
+    </header>
 
-            <!-- 插件 -->
-            <li class="menu-item">
-                <a href="#" class="menu-link" data-menu="plugin">
-                    <i class="fas fa-puzzle-piece menu-icon"></i>
-                    <span class="menu-text">插件</span>
-                    <i class="fas fa-chevron-right menu-arrow"></i>
-                </a>
-                <ul class="submenu">
-                    <li class="submenu-item">
-                        <a href="#" class="submenu-link">浏览器插件</a>
-                    </li>
-                    <li class="submenu-item">
-                        <a href="#" class="submenu-link">编辑器扩展</a>
-                    </li>
-                </ul>
-            </li>
+    <!-- 主内容区 -->
+    <div class="container">
+        <!-- 统计卡片 -->
+        <div class="stats-cards">
+            <div class="stat-card">
+                <i class="fas fa-link"></i>
+                <h3>29</h3>
+                <p>赛事官网链接</p>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-layer-group"></i>
+                <h3>10</h3>
+                <p>体育分类</p>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-futbol"></i>
+                <h3>10</h3>
+                <p>足球赛事</p>
+            </div>
+        </div>
 
-            <!-- 比赛 -->
-            <li class="menu-item">
-                <a href="#" class="menu-link" data-menu="contest">
-                    <i class="fas fa-trophy menu-icon"></i>
-                    <span class="menu-text">比赛</span>
-                    <i class="fas fa-chevron-right menu-arrow"></i>
-                </a>
-                <ul class="submenu">
-                    <li class="submenu-item">
-                        <a href="#" class="submenu-link">AI挑战赛</a>
-                    </li>
-                    <li class="submenu-item">
-                        <a href="#" class="submenu-link">算法竞赛</a>
-                    </li>
-                    <li class="submenu-item">
-                        <a href="#" class="submenu-link">创新大赛</a>
-                    </li>
-                </ul>
-            </li>
+        <!-- 分类卡片 -->
+        <div class="categories" id="categories-container">
+            <!-- 分类卡片将通过JavaScript动态生成 -->
+        </div>
+    </div>
 
-            <!-- 科普 -->
-            <li class="menu-item">
-                <a href="#" class="menu-link" data-menu="science">
-                    <i class="fas fa-book menu-icon"></i>
-                    <span class="menu-text">科普</span>
-                    <i class="fas fa-chevron-right menu-arrow"></i>
-                </a>
-                <ul class="submenu">
-                    <li class="submenu-item">
-                        <a href="#" class="submenu-link">AI知识库</a>
-                    </li>
-                    <li class="submenu-item">
-                        <a href="#" class="submenu-link">技术文章</a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-    </nav>
+    <!-- 页脚 -->
+    <footer>
+        <div class="footer-content">
+            <p>© 2024 赛事官网汇总 | 数据更新时间: <span id="update-time"></span></p>
+        </div>
+    </footer>
 
-    <!-- 内容区域（用于演示）
-    <div class="content">
-        <h1>AI交流平台</h1>
-        <p>这是一个演示页面，用于展示侧边栏的固定定位效果。当页面滚动时，侧边栏会固定在左侧。</p>
-        <p>侧边栏默认收起，仅显示图标。将鼠标悬停在侧边栏上时，会自动展开显示完整菜单。</p>
-        <p>点击一级菜单可以展开/收起子菜单，带有平滑的过渡动画效果。</p>
-        <p>继续滚动查看效果...</p>
-        <div style="height: 1000px;"></div>
-        <p>页面底部内容</p>
-    </div> -->
+    <script>
+        // 赛事数据
+        const eventsData = [
+            {
+                "category": "乒乓球",
+                "events": [
+                    {
+                        "name": "国际乒联官网",
+                        "url": "https://www.ittf.com"
+                    }
+                ]
+            },
+            {
+                "category": "常见赛事购票普通",
+                "events": [
+                    {
+                        "name": "大麦",
+                        "url": "https://www.damai.cn"
+                    }
+                ]
+            },
+            {
+                "category": "游泳",
+                "events": [
+                    {
+                        "name": "2027布达佩斯游泳世锦赛",
+                        "url": "https://www.worldaquatics.com/competitions"
+                    },
+                    {
+                        "name": "国际泳联官网",
+                        "url": "https://www.worldaquatics.com"
+                    }
+                ]
+            },
+            {
+                "category": "田径",
+                "events": [
+                    {
+                        "name": "世界田径官网",
+                        "url": "https://www.worldathletics.org"
+                    }
+                ]
+            },
+            {
+                "category": "篮球",
+                "events": [
+                    {
+                        "name": "NBA中国官网",
+                        "url": "https://www.nba.com/china"
+                    },
+                    {
+                        "name": "CBA官网",
+                        "url": "https://www.cbaleague.com"
+                    },
+                    {
+                        "name": "FIBA国际篮联",
+                        "url": "https://www.fiba.basketball"
+                    },
+                    {
+                        "name": "2024巴黎奥运会",
+                        "url": "https://olympics.com/paris-2024"
+                    }
+                ]
+            },
+            {
+                "category": "综合类赛事",
+                "events": [
+                    {
+                        "name": "第十五届粤港澳全运会",
+                        "url": "https://www.baygames.cn"
+                    },
+                    {
+                        "name": "国际奥委会",
+                        "url": "https://www.olympic.org"
+                    },
+                    {
+                        "name": "2026米兰-科尔蒂纳丹佩左冬奥会",
+                        "url": "https://www.olympic.org/milano-cortina-2026"
+                    }
+                ]
+            },
+            {
+                "category": "羽毛球",
+                "events": [
+                    {
+                        "name": "世界羽联BWF",
+                        "url": "https://www.bwfbadminton.com"
+                    }
+                ]
+            },
+            {
+                "category": "赛事观看平台",
+                "events": [
+                    {
+                        "name": "腾讯体育",
+                        "url": "https://sports.qq.com"
+                    },
+                    {
+                        "name": "咪咕视频",
+                        "url": "https://www.miguvideo.com"
+                    },
+                    {
+                        "name": "爱奇艺体育",
+                        "url": "https://sports.iqiyi.com"
+                    },
+                    {
+                        "name": "央视体育",
+                        "url": "https://sports.cctv.com"
+                    },
+                    {
+                        "name": "优酷体育",
+                        "url": "https://sports.youku.com"
+                    }
+                ]
+            },
+            {
+                "category": "赛车",
+                "events": [
+                    {
+                        "name": "F1中国大奖赛",
+                        "url": "https://www.formula1.com"
+                    }
+                ]
+            },
+            {
+                "category": "足球",
+                "events": [
+                    {
+                        "name": "英超",
+                        "url": "https://www.premierleague.com"
+                    },
+                    {
+                        "name": "西甲",
+                        "url": "https://www.laliga.com"
+                    },
+                    {
+                        "name": "法甲",
+                        "url": "https://www.ligue1.com"
+                    },
+                    {
+                        "name": "意甲",
+                        "url": "https://www.seriea.it"
+                    },
+                    {
+                        "name": "德甲",
+                        "url": "https://www.bundesliga.de"
+                    },
+                    {
+                        "name": "欧冠",
+                        "url": "https://www.uefa.com/championsleague"
+                    },
+                    {
+                        "name": "中超",
+                        "url": "https://www.csl-china.com"
+                    },
+                    {
+                        "name": "中国足协",
+                        "url": "https://www.thecfa.cn"
+                    },
+                    {
+                        "name": "亚足联",
+                        "url": "https://www.the-afc.com"
+                    },
+                    {
+                        "name": "国际足联FIFA",
+                        "url": "https://www.fifa.com"
+                    }
+                ]
+            }
+        ];
 
-    <!-- 引入外部JavaScript文件 -->
-    <script src="chaoxing_left_table.js"></script>
+        // 分类图标映射
+        const categoryIcons = {
+            '足球': 'football',
+            '篮球': 'basketball',
+            '游泳': 'swimming',
+            '乒乓球': 'tabletennis',
+            '羽毛球': 'badminton',
+            '田径': 'athletics',
+            '赛车': 'racing',
+            '赛事观看平台': 'platform',
+            '常见赛事购票普通': 'tickets',
+            '综合类赛事': 'general'
+        };
+
+        // 生成分类卡片
+        function generateCategoryCards() {
+            const container = document.getElementById('categories-container');
+            
+            eventsData.forEach(categoryData => {
+                const categoryClass = categoryIcons[categoryData.category] || 'general';
+                
+                const card = document.createElement('div');
+                card.className = `category-card ${categoryClass}`;
+                
+                card.innerHTML = `
+                    <div class="category-header">
+                        <h2><i class="category-icon"></i> ${categoryData.category}</h2>
+                        <span class="category-count">${categoryData.events.length}</span>
+                    </div>
+                    <div class="events-list">
+                        ${categoryData.events.map(event => `
+                            <div class="event-item">
+                                <i class="fas fa-external-link-alt"></i>
+                                <div class="event-info">
+                                    <h3>${event.name}</h3>
+                                    <p><a href="${event.url}" target="_blank" class="event-link">${event.url}</a></p>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                
+                container.appendChild(card);
+            });
+        }
+
+        // 设置更新时间
+        function setUpdateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleString('zh-CN', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            document.getElementById('update-time').textContent = timeString;
+        }
+
+        // 页面加载完成后执行
+        document.addEventListener('DOMContentLoaded', () => {
+            generateCategoryCards();
+            setUpdateTime();
+        });
+    </script>
 </body>
 </html>
